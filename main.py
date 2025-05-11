@@ -8,7 +8,7 @@ def main():
     return json.dumps(dict(status="success", message="Working"))
 
 @app.route("/home", methods=["GET"])
-def main():
+def home():
     return json.dumps(dict(status="success", message="Working from home"))
 
 

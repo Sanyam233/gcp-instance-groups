@@ -17,6 +17,9 @@ echo "Docker installed and $USER added to the docker group." >> /var/log/startup
 # Re-enable group membership without logging out
 newgrp docker
 
+# Pull and run the Docker image from GCR (use metadata to dynamically specify the image)
+# IMAGE=$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker-image" -H "Metadata-Flavor: Google")
+
 # Authenticate Docker to use GCR
 gcloud auth configure-docker --quiet
 
@@ -31,6 +34,9 @@ fi
 
 # Log the image name for debugging
 echo "Using Docker image: $IMAGE" >> /var/log/startup-script.log
+
+# Authenticate Docker to use GCR
+# gcloud auth configure-docker --quiet
 
 # Pull the Docker image
 docker pull "$IMAGE" || { echo "ERROR: Failed to pull Docker image." >> /var/log/startup-script.log; exit 1; }
