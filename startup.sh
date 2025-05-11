@@ -25,6 +25,8 @@ gcloud auth configure-docker --quiet
 
 # Get Docker image name from metadata
 IMAGE=$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/attributes/docker-image" -H "Metadata-Flavor: Google")
+NAME=$(curl -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/name)
+ZONE=$(curl -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/zone | sed 's@.*/@@')
 
 # Check if the image is empty
 if [ -z "$IMAGE" ]; then
@@ -46,4 +48,4 @@ docker stop my-app || true
 docker rm my-app || true
 
 # Run the container
-docker run -d --name my-app -p 80:8080 "$IMAGE" || { echo "ERROR: Failed to run Docker container." >> /var/log/startup-script.log; exit 1; }
+docker run -d --env NAME="$NAME" --env ZONE="$ZONE" --name my-app -p 80:8080 "$IMAGE" || { echo "ERROR: Failed to run Docker container." >> /var/log/startup-script.log; exit 1; }

@@ -1,11 +1,14 @@
 from flask import Flask
 import json
+import os
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def main():
-    return json.dumps(dict(status="success", message="Working"))
+    name = os.getenv("NAME", "NAME-DEV")
+    zone = os.getenv("ZONE", "ZONE-DEV")
+    return json.dumps(dict(status="success", message=f"This container is {name} in zone {zone}"))
 
 @app.route("/home", methods=["GET"])
 def home():
