@@ -5,7 +5,8 @@ on:
     branches: [main]
 
 env:
-  PROJECT_ID: 123
+  PROJECT_ID: second-terra-452922-p7
+  IMAGE_NAME: gcp-instance-groups
 
 jobs:
   build-and-deploy:
