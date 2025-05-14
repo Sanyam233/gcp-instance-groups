@@ -1,2 +1,3 @@
 .venv
 gcp-instance-groups-20250505.json
+.env

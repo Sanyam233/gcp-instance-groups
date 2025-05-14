@@ -3,9 +3,13 @@ import json
 import os
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "secret!"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", os.urandom(24))
+
 CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -42,4 +46,8 @@ def handle_socket_error(err):
     print("HEREEE", err, flush=True)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=8080)
+    if os.getenv("DEV_ENV") == "test":
+        socketio.run(app)
+    else:
+        socketio.run(app, debug=True, host='0.0.0.0', port=8080)
+
