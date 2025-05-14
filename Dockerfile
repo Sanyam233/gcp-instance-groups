@@ -13,6 +13,6 @@ COPY . .
 ENV SECRET_KEY=${SECRET_KEY}
 ENV DEV_ENV=${DEV_ENV}
 
-CMD ["gunicorn", "--worker-class", "eventlet", "-w", "1", "-b", "0.0.0.0:8080", "main:socketio"]
+CMD ["gunicorn", "main:app", "--worker-class", "eventlet", "-w", "1", "-b", "0.0.0.0:8080"]
 
 
