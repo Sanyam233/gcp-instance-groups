@@ -31,16 +31,16 @@ def connected():
 
 @socketio.on("vm_info")
 def handle_vm_info():
-    print("NEW ENDPOINT", flush=True)
     name = os.getenv("NAME", "NAME-DEV")
     zone = os.getenv("ZONE", "ZONE-DEV")
+    print("GETTING VM INFO", name, zone, flush=True)
     emit("vm_info", {"data" : {"name" : name, "zone" : zone}})
 
 @socketio.on("disconnect")
-def disconnected():
+def disconnected(data):
     """event listener when client disconnects to the server"""
     print(f"user disconnected {request.sid}", flush=True)
-    
+
 @socketio.on_error()
 def handle_socket_error(err):
     print("HEREEE", err, flush=True)

@@ -13,6 +13,6 @@ COPY . .
 ENV SECRET_KEY=${SECRET_KEY}
 ENV DEV_ENV=${DEV_ENV}
 
-CMD ["gunicorn", "main:app", "--worker-class", "eventlet", "-w", "1", "-b", "0.0.0.0:8080"]
+CMD ["gunicorn", "main:app", "--worker-class", "eventlet", "-w", "1", "-b", "0.0.0.0:8080", "--limit-request-field_size", "16384"]
 
 
