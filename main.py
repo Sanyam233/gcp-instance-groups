@@ -47,7 +47,7 @@ def handle_socket_error(err):
 
 if __name__ == '__main__':
     if os.getenv("DEV_ENV") == "test":
-        socketio.run(app, host='0.0.0.0', port=8080)
+        socketio.run(app)
     else:
         socketio.run(app, debug=True, host='0.0.0.0', port=8080)
 
