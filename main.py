@@ -26,6 +26,7 @@ def home():
 @socketio.on("connect")
 def connected():
     """event listener when client connects to the server"""
+    print(f"Headers: {dict(request.headers)}", flush=True)
     print(f"client has connected {request.sid}", flush=True)
     emit("success",{"data":f"id: {request.sid} is connected"}, to=request.sid)
 
@@ -33,7 +34,6 @@ def connected():
 def handle_vm_info():
     name = os.getenv("NAME", "NAME-DEV")
     zone = os.getenv("ZONE", "ZONE-DEV")
-    print("GETTING VM INFO", name, zone, flush=True)
     emit("vm_info", {"data" : {"name" : name, "zone" : zone}})
 
 @socketio.on("disconnect")
@@ -47,7 +47,7 @@ def handle_socket_error(err):
 
 if __name__ == '__main__':
     if os.getenv("DEV_ENV") == "test":
-        socketio.run(app)
+        socketio.run(app, host='0.0.0.0', port=8080)
     else:
         socketio.run(app, debug=True, host='0.0.0.0', port=8080)
 
