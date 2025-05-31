@@ -48,4 +48,4 @@ docker stop my-app || true
 docker rm my-app || true
 
 # Run the container
-docker run -d --env NAME="$NAME" --env ZONE="$ZONE" --name my-app -p 80:8080 "$IMAGE" || { echo "ERROR: Failed to run Docker container." >> /var/log/startup-script.log; exit 1; }
+docker run -d --env NAME="$NAME" --env ZONE="$ZONE" --name my-app -p 8080:8080 "$IMAGE" || { echo "ERROR: Failed to run Docker container." >> /var/log/startup-script.log; exit 1; }
